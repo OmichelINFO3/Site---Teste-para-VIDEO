@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exemplo de Métodos do Objeto Áudio</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body{
+    margin: 0;
+    height: 100vh;
+}
+#div-geral{
+    background-color: rgb(230, 230, 230);
+    padding: 20px;
+    border-radius: 20px;
+}
+#for-body{
+    background-color: rgb(170, 170, 170);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+#video{
+    border-radius: 20px;
+}
+
+#imgtitulo{
+    padding: 20px;
+}
+
+
+header{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#botoes{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(209, 209, 209);
+    padding: 18px;
+    border-radius: 10px;
+}
+
+.img-button{
+    width: 25px;
+    height: 25px;
+}
+
+.botao{
+    background-color: rgb(192, 40, 40);
+    border-radius: 10px;
+    padding: 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.info-text{
+    font-family: helvetica;
+    background-color: rgb(210, 210, 210);
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+#current-source{
+    font-family: helvetica;
+    background-color: rgb(210, 210, 210);
+    padding: 10px;
+    border-radius: 12px;
+}
+
+</style>
+</head>
+<header>
+</header>
+<body>
+    <header>
+        <img src="titulo.png" id="imgtitulo">
+    </header>
+    <div id="for-body">
+        <div id="div-geral">
+            <video id="video" src="DSMN.mp4" controls >
+                <source id="srcvideo" src="DSMN.mp4" type="video/mp4">
+            </video>
+            <div id="botoes">
+                <button id="play" class="botao"><img class="img-button" src="play.png"></button>
+                <button id="pause" class="botao"><img class="img-button" src="pause.png"></button>
+                <button id="show" class="botao"><img class="img-button" src="info.png"></button>
+                <button id="heightp" class="botao"><img class="img-button" src="hm.png"></button>
+                <button id="heightm" class="botao"><img class="img-button" src="hme.png"></button>
+                <button id="heightr" class="botao"><img class="img-button" src="hr.png"></button>
+                <button id="widthp" class="botao"><img class="img-button" src="wm.png"></button>
+                <button id="widthm" class="botao"><img class="img-button" src="wme.png"></button>
+                <button id="widthr" class="botao"><img class="img-button" src="wr.png"></button>
+                <button id="posterchange" class="botao"><img class="img-button" src="img.png"></button>
+            </div>
+            <div id="info" hidden>
+                <h2 id="current-source"></h2>
+                <p class="info-text" id="control"></p>
+                <p class="info-text" id="autoplay"></p>
+                <p class="info-text" id="loop"></p>
+                <p class="info-text" id="poster"></p>
+                <p class="info-text" id="id"></p>
+                <p class="info-text" id="width-video"></p>
+                <p class="info-text" id="height-video"></p>
+               <!--currentSrc, controls, autoplay, loop, poster, id, width, height-->
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function(){
+        var video = document.getElementById("video");
+        let wor = 1280;
+        let hor = 720;
+        let w = wor;
+        let h = hor;
+        let indiceposter = 0;
+        video.poster = "queen1.jpeg"
+        document.getElementById("video").height = 720;
+        document.getElementById("video").width = 1280;
+
+        video.onended = function(){
+            alert("O video acabou.");
+        }
+
+        document.getElementById("current-source").innerHTML = "Endereço Atual: "+video.src;
+
+        if(video.controls){
+            document.getElementById("control").style.color = "Green";
+            document.getElementById("control").innerHTML = "Há controles";
+        }else{
+            document.getElementById("control").style.color = "Red";
+            document.getElementById("control").innerHTML = "Não há controles";
+        }
+
+        if(video.autoplay){
+            document.getElementById("autoplay").style.color = "Green";
+            document.getElementById("autoplay").innerHTML = "O video possui autoplay";
+        }else{
+            document.getElementById("autoplay").style.color = "Red";
+            document.getElementById("autoplay").innerHTML = "O video não possui autoplay";
+        }
+
+        if(video.loop){
+            document.getElementById("loop").style.color = "Green";
+            document.getElementById("loop").innerHTML = "O video está em loop";
+        }else{
+            document.getElementById("loop").style.color = "Red";
+            document.getElementById("loop").innerHTML = "O video não esta em loop";
+        }
+
+            document.getElementById("poster").innerHTML = "Poster Atual: "+video.poster;    
+            document.getElementById("id").innerHTML = "ID do Arquivo: "+video.id;
+            document.getElementById("width-video").innerHTML = "Width do Video: "+video.width;
+            document.getElementById("height-video").innerHTML = "Height do Video: "+video.height;
+
+        if(video.canPlayType("video/mp4")){
+            console.log("Arquivo Suportado");
+        }
+        else{
+            console.log("Arquivo Não Suportado");
+        }
+
+            $("#play").click(function(){
+                video.play();
+            });
+
+            $("#pause").click(function(){
+                video.pause();
+                alert("Video Pausado");
+            });
+
+            $("#heightp").click(function(){
+                h = h + 50;
+                document.getElementById("video").height = h;
+            });
+
+            $("#heightm").click(function(){
+                h = h - 50;
+                document.getElementById("video").height = h;
+            });
+
+            $("#heightr").click(function(){
+                document.getElementById("video").height = hor;
+            });
+
+            $("#widthp").click(function(){
+                w = w + 50;
+                document.getElementById("video").width = w;
+            });
+
+            $("#widthm").click(function(){
+                w = w - 50;
+                document.getElementById("video").width = w;
+            });
+
+            $("#widthr").click(function(){
+                document.getElementById("video").width = wor;
+            });
+
+            $("#show").click(function(){
+                $("#info").slideToggle();
+            });
+
+            $("#posterchange").click(function(){
+                indiceposter++;
+                if(indiceposter %2 == 0){
+                video.poster = "queen1.jpeg"
+                document.getElementById("video").height = 720;
+                document.getElementById("video").width = 1280;
+                }
+                else{
+                video.poster = "queen2.jpeg"
+                document.getElementById("video").height = 720;
+                document.getElementById("video").width = 1280;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
